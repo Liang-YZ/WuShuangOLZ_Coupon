@@ -1,0 +1,16 @@
+﻿<Window x:Class="Core.LoadingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Core"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        mc:Ignorable="d"
+        Style="{StaticResource CircularCornerWindow}"
+        Title="LoadingWindow" SizeToContent="WidthAndHeight" AllowsTransparency="True" WindowStyle="None" 
+        Opacity="0.7" Background="#333333" WindowStartupLocation="CenterOwner" MouseMove="Window_MouseMove" ShowInTaskbar="False">
+    <StackPanel Orientation="Horizontal" Height="70" MinWidth="200">
+        <fa5:ImageAwesome Margin="15,0,20,0" Icon="Solid_Spinner" Spin="True" SpinDuration="2" Width="40" Height="40" Foreground="#409EFF" />
+        <TextBlock x:Name="ContentText" Margin="0,0,10,0" VerticalAlignment="Center" FontSize="16"  Foreground="White" Text="正在加载......" />
+    </StackPanel>
+</Window>
