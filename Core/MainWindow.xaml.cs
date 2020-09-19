@@ -94,31 +94,8 @@ namespace Core
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             BindComboBoxData();
-
-            ws.UserName = "Z575758320";
-            ws.Password = "Z57575832008";
-            //ws.UserName = "Yang252087987";
-            //ws.Password = "Yang030201";
             this.DataContext = ws;//会触发道具索引下拉选择框的 SelectionChanged 事件
-
-            //if (!(await isConnAsync()))
-            //{
-            //    MessageBox.Show("连接超时，请检查您的网络或者本机防火墙设置！", "提示");
-            //    return;
-            //}
-
-            //GetValidateImg();
             await GetValidateImgAsync();
-            
-
-            ////直接进入登录状态，方便测试
-            //Cookie cookie = new Cookie("Cjit2_UAC_User", "UserId=lgFsfK3QnJWNTs3B3VIVOA==&UserName=dYPC2pDwFrsG1b2EGssJdA==", "/", GetAppSettings("PropDomain"));
-            //socketHandler.CookieContainer.Add(cookie);
-            ////获取道具箱页面信息
-            //ws.PageInfo = await GetPageInfoAsync();
-            //ws.PageTotal = ws.PageInfo.Total;
-            //ws.PageEnd = ws.PageInfo.Total;
-            //ws.IsLogin = true;
         }
 
         /// <summary>
@@ -239,13 +216,7 @@ namespace Core
                     MessageBox.Show(GetMessage(MessageType.VerificationCodeEmpty), "提示");
                     return;
                 }
-
-                //if (!(await isConnAsync()))
-                //{
-                //    MessageBox.Show("连接超时，请检查您的网络或者本机防火墙设置！", "提示");
-                //    return;
-                //}
-
+                
                 Task<MessageType> task = Login();
                 ShowLoading(task, MessageType.LoggingIn);
 
@@ -643,15 +614,6 @@ namespace Core
                         dt = dv.ToTable();
                         if (dt != null && dt.Rows.Count > 0)
                         {
-                            //this.Dispatcher.Invoke(() =>
-                            //{
-                            //    //保存到 txt 文件
-                            //    if (ws.FileType == 1)
-                            //        msgType = WriteToTxt(dt);
-                            //    //保存到 Excel 文件
-                            //    else
-                            //        msgType = SaveAsExcel(dt);
-                            //});
                             //保存到 txt 文件
                             if (ws.FileType == 1)
                                 msgType = await WriteToTxtAsync(dt);
@@ -770,9 +732,7 @@ namespace Core
                     else
                        return MessageType.SaveCanceled;
                 }
-                //创建写入文件  FileMode.Create：创建新文件， 如果此文件已存在，则会将其覆盖
-                //FileStream fs = new FileStream(strFilePath, FileMode.Create, FileAccess.Write);
-                //StreamWriter sw = new StreamWriter(fs, Encoding.UTF8));
+                
                 //如果该文件不存在，将创建一个新文件；如果该文件存在，则覆盖。 
                 using (StreamWriter sw = new StreamWriter(saveFullPath, false, Encoding.UTF8))
                 {
@@ -782,11 +742,7 @@ namespace Core
                     string GetDateCol = "获得日期";
                     string StateCol = "状态";
                     string ExchangeCol = "兑换古钱";
-                    int CouponDescriptionColWidth = Encoding.UTF8.GetByteCount("");
 
-                    //sw.WriteLine($"{CouponNoCol}{CouponDescriptionCol}{CategoryCol}{GetDateCol}{StateCol}{ExchangeCol}");//写入值
-                    //int len = dt.AsEnumerable().Max(dr => dr.Field<string>(CouponDescriptionCol).Length);//获得“优惠券描述”最长字符串的长度
-                    //int len = dt.AsEnumerable().Max(dr => Encoding.UTF8.GetByteCount(dr.Field<string>(CouponDescriptionCol)));//获得“优惠券描述”UTF8编码最长字符串的长度
                     string interval = string.Empty.PadRight(10, ' ');
                     foreach (DataRow dr in dt.Rows)
                     {
@@ -897,13 +853,7 @@ namespace Core
             {
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, validateCodeUrl))
                 {
-                    //request.Headers.Add("Accept", "image/gif,image/x-xbitmap,image/jpeg,image/pjpeg,image/webp,image/apng,image/*,*/*;q=0.8");
                     request.Headers.Add("Accept", "image/webp,image/apng,image/*,*/*;q=0.8");
-                    //request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
-                    //request.Headers.Add("Accept-Language", "zh-CN,zh;q=0.9");
-                    //request.Headers.Add("Referer", loginURI);//服务器有检测 Referer，必须与验证码地址同一域名
-                    //request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36 SE 2.X MetaSr 1.0");
-                    //request.Headers.Add("Cookie", "ASP.NET_SessionId=x1zqwyi2port3oca31tzyzui; path=/; HttpOnly");
                     using (HttpResponseMessage response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                     {
                         response.EnsureSuccessStatusCode();
